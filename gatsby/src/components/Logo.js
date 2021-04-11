@@ -38,7 +38,7 @@ const LogoStyles = styled.div`
   }
 
   .slices {
-    font-size: 3.2em;
+    font-size: 2.2em;
     letter-spacing: 0.2em;
     transform: translateY(-0.15em);
   }
@@ -102,18 +102,18 @@ export default function Logo() {
   return (
     <LogoStyles className="logo">
       <div className="inner">
-        <span className="est">EST 1994</span>
+        <span className="est">EST 2020</span>
         <h1>
           <span className="slicks">
-            <span className="letter S">S</span>
-            <span className="letter l">l</span>
-            <span className="letter i">i</span>
-            <span className="letter c">c</span>
-            <span className="letter k">k</span>
+            <span className="letter k">L</span>
+            <span className="letter k">o</span>
+            <span className="letter k">v</span>
+            <span className="letter k">e</span>
+            {/* <span className="letter k">k</span>
             <span className="letter apos">'</span>
-            <span className="letter s">s</span>
+            <span className="letter s">s</span> */}
           </span>
-          <span className="slices">slices</span>
+          <span className="slices">Wavertree</span>
         </h1>
       </div>
     </LogoStyles>

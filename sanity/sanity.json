@@ -1,11 +1,11 @@
 {
   "root": true,
   "api": {
-    "projectId": "dj7cjeab",
+    "projectId": "ob0oot7j",
     "dataset": "production"
   },
   "project": {
-    "name": "slics-slices-seano"
+    "name": "lovewavo"
   },
   "plugins": [
     "@sanity/base",

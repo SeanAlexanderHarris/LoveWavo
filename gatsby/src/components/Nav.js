@@ -53,10 +53,10 @@ export default function Nav() {
     <NavStyles>
       <ul>
         <li>
-          <Link to="/">Hot Now</Link>
+          <Link to="/">Wavertree Now</Link>
         </li>
         <li>
-          <Link to="/pizzas/">Pizza Menu</Link>
+          <Link to="/store/">Our Shop</Link>
         </li>
         <li>
           <Link to="/">
@@ -64,10 +64,10 @@ export default function Nav() {
           </Link>
         </li>
         <li>
-          <Link to="/slicemasters">SliceMasters</Link>
+          <Link to="/blog">Our Blog</Link>
         </li>
         <li>
-          <Link to="/order">Order Ahead!</Link>
+          <Link to="/staff">Our Team</Link>
         </li>
       </ul>
     </NavStyles>

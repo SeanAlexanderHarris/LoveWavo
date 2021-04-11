@@ -15,16 +15,16 @@ export default {
       description: 'Name of the pizza',
     },
     {
-      name: 'slicemaster',
-      title: 'Slicemasters Currently Slicing',
+      name: 'staffmember', // slicemaster
+      title: 'Currently Serving the Community',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'person' }] }],
     },
     {
-      name: 'hotSlices',
-      title: 'Hot Slices available in the case',
+      name: 'hotItems', // hotSlices
+      title: 'Hot Items available in the shop',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'pizza' }] }],
+      of: [{ type: 'reference', to: [{ type: 'item' }] }], // pizza
     },
   ],
 };

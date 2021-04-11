@@ -1,16 +1,16 @@
 import path from 'path';
 import fetch from 'isomorphic-fetch';
 
-async function turnPizzasIntoPages({ graphql, actions }) {
+async function turnStoreItemsIntoPages({ graphql, actions }) {
   // 1. Get a template for this page
-  const pizzaPageTemplate = path.resolve(
-    './src/templates/PizzaPageTemplate.js'
+  const storeItemPageTemplate = path.resolve(
+    './src/templates/StoreItemPageTemplate.js'
   );
 
   // 2. Query all pizzas
   const { data } = await graphql(`
     query MyQuery {
-      pizzas: allSanityPizza {
+      storeItems: allSanityItem {
         nodes {
           name
           slug {
@@ -22,31 +22,31 @@ async function turnPizzasIntoPages({ graphql, actions }) {
   `);
 
   // 3. Loop over each pizza and create a page for it
-  data.pizzas.nodes.forEach((pizza) => {
+  data.storeItems.nodes.forEach((storeItem) => {
     console.log(
-      `Creating a page for ${pizza.name} at pizza/${pizza.slug.current}`
+      `Creating a page for ${storeItem.name} at store/${storeItem.slug.current}`
     );
 
     actions.createPage({
-      path: `pizza/${pizza.slug.current}`,
-      component: pizzaPageTemplate,
+      path: `store/${storeItem.slug.current}`,
+      component: storeItemPageTemplate,
       context: {
-        slug: pizza.slug.current,
+        slug: storeItem.slug.current,
       },
     });
   });
 }
 
-async function turnToppingsIntoPages({ graphql, actions }) {
-  console.log('Creating toppings page...');
+async function turnItemTagsIntoPages({ graphql, actions }) {
+  console.log('Creating item tags page...');
 
   // 1. Get a template for this page
-  const toppingPageTemplate = path.resolve('./src/pages/pizzas.js');
+  const storeItemPageTemplate = path.resolve('./src/pages/pizzas.js');
 
   // 2. Query all toppings
   const { data } = await graphql(`
     query MyQuery {
-      toppings: allSanityTopping {
+      itemTags: allSanityItemTag {
         nodes {
           name
           id
@@ -55,18 +55,85 @@ async function turnToppingsIntoPages({ graphql, actions }) {
     }
   `);
 
-  // 4. Pass topping data to pizza.js
-  data.toppings.nodes.forEach((topping) => {
+  // 4. Pass item tag data to store.js
+  data.itemTags.nodes.forEach((itemTag) => {
     actions.createPage({
-      path: `topping/${topping.name}`,
-      component: toppingPageTemplate,
+      path: `itemtags/${itemTag.name}`,
+      component: storeItemPageTemplate,
       context: {
-        topping: topping.name,
-        toppingRegex: `/${topping.name}/i`,
+        itemTag: itemTag.name,
+        itemTagRegex: `/${itemTag.name}/i`,
       },
     });
   });
 }
+
+// async function turnPizzasIntoPages({ graphql, actions }) {
+//   // 1. Get a template for this page
+//   const pizzaPageTemplate = path.resolve(
+//     './src/templates/PizzaPageTemplate.js'
+//   );
+
+//   // 2. Query all pizzas
+//   const { data } = await graphql(`
+//     query MyQuery {
+//       pizzas: allSanityPizza {
+//         nodes {
+//           name
+//           slug {
+//             current
+//           }
+//         }
+//       }
+//     }
+//   `);
+
+//   // 3. Loop over each pizza and create a page for it
+//   data.pizzas.nodes.forEach((pizza) => {
+//     console.log(
+//       `Creating a page for ${pizza.name} at pizza/${pizza.slug.current}`
+//     );
+
+//     actions.createPage({
+//       path: `pizza/${pizza.slug.current}`,
+//       component: pizzaPageTemplate,
+//       context: {
+//         slug: pizza.slug.current,
+//       },
+//     });
+//   });
+// }
+
+// async function turnToppingsIntoPages({ graphql, actions }) {
+//   console.log('Creating toppings page...');
+
+//   // 1. Get a template for this page
+//   const toppingPageTemplate = path.resolve('./src/pages/pizzas.js');
+
+//   // 2. Query all toppings
+//   const { data } = await graphql(`
+//     query MyQuery {
+//       toppings: allSanityTopping {
+//         nodes {
+//           name
+//           id
+//         }
+//       }
+//     }
+//   `);
+
+//   // 4. Pass topping data to pizza.js
+//   data.toppings.nodes.forEach((topping) => {
+//     actions.createPage({
+//       path: `topping/${topping.name}`,
+//       component: toppingPageTemplate,
+//       context: {
+//         topping: topping.name,
+//         toppingRegex: `/${topping.name}/i`,
+//       },
+//     });
+//   });
+// }
 
 exports.sourceNodes = async ({
   actions,
@@ -101,14 +168,14 @@ exports.sourceNodes = async ({
   }
 };
 
-async function turnSliceMastersIntoPages({ graphql, actions }) {
+async function turnStaffMembersIntoPages({ graphql, actions }) {
   // 1. Query all slice masters
   const { data } = await graphql(`
     query MyQuery {
-      sliceMasters: allSanityPerson {
+      staffMembers: allSanityPerson {
         totalCount
         nodes {
-          id
+          _id
           name
           slug {
             current
@@ -118,40 +185,43 @@ async function turnSliceMastersIntoPages({ graphql, actions }) {
     }
   `);
 
+  console.log('DATA IYA', data.staffMembers.nodes);
+
   // 2. Figure out how many pages there are based on how many sliceMasters there are & how many we want per page
-  const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE);
-  const pageCount = Math.ceil(data.sliceMasters.totalCount / pageSize);
+  // fix this
+  const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE) == null ? 4 : 4;
+  const pageCount = Math.ceil(data.staffMembers.totalCount / pageSize);
 
   console.log(
-    `Creating ${pageCount} pages for ${data.sliceMasters.totalCount} sliceMasters at ${pageSize} per page`
+    `Creating ${pageCount} pages for ${data.staffMembers.totalCount} staffMembers at ${pageSize} per page`
   );
 
   // 3. Loop from 1 to n & create the pages for them
   Array.from({ length: 5 }).forEach((_, i) => {
     actions.createPage({
-      path: `slicemasters/${i + 1}`,
-      component: path.resolve('./src/pages/slicemasters.js'),
+      path: `staff/${i + 1}`,
+      component: path.resolve('./src/pages/staff.js'),
       context: {
-        skip: i * pageSize,
+        // skip: i * pageSize,
         currentPage: i + 1,
         totalPages: pageCount,
-        pageSize,
+        // pageSize,
       },
     });
   });
 
-  const sliceMasterTemplate = path.resolve(
-    './src/templates/SliceMasterPageTemplate.js'
+  const staffMemberPageTemplate = path.resolve(
+    './src/templates/StaffMemberPageTemplate.js'
   );
 
   // 4. Also create individual sliceMaster pages
-  data.sliceMasters.nodes.forEach((sliceMaster) => {
+  data.staffMembers.nodes.forEach((staffMember) => {
     actions.createPage({
-      component: sliceMasterTemplate,
-      path: `/slicemaster/${sliceMaster.slug.current}`,
+      component: staffMemberPageTemplate,
+      path: `/staff/${staffMember.slug.current}`,
       context: {
-        name: sliceMaster.person,
-        slug: sliceMaster.slug.current,
+        name: staffMember.person,
+        slug: staffMember.slug.current,
       },
     });
   });
@@ -161,8 +231,10 @@ export async function createPages(params) {
   // create pages dynamically
   // 1. Pizzas and 2. Toppings and 3. SliceMasters
   await Promise.all([
-    turnPizzasIntoPages(params),
-    turnToppingsIntoPages(params),
-    turnSliceMastersIntoPages(params),
+    // turnPizzasIntoPages(params),
+    // turnToppingsIntoPages(params),
+    turnStaffMembersIntoPages(params),
+    turnStoreItemsIntoPages(params),
+    turnItemTagsIntoPages(params),
   ]);
 }

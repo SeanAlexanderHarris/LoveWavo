@@ -5,8 +5,8 @@ export default {
     // Computer name
     name: 'person',
 
-    // Visible title
-    title: 'Slicemasters',
+    // Visible title 
+    title: 'Staff Members', // Slicemasters
     type: 'document',
     icon: icon,
     fields: [{
@@ -19,7 +19,7 @@ export default {
         name: 'description',
         title: 'Description',
         type: 'text',
-        description: 'Tell us a bit about this slicemaster..'
+        description: 'Tell us a bit about this staff member..'
     },
     {
         name: 'slug',

@@ -1,10 +1,10 @@
 {
-  "name": "slicks-slices-backend",
+  "name": "lovewavertree-backend",
   "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "package.json",
-  "author": "Wes Bos <wesbos@gmail.com>",
+  "author": "Sean Harris <sean.alexander.harris.29@googlemail.com>",
   "license": "UNLICENSED",
   "scripts": {
     "lint": "eslint .",

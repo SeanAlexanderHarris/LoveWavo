@@ -14,11 +14,11 @@ const deets = `
 `;
 
 export default function useLatestData() {
-  // hot slices
+  // hot items
   const [hotslices, setHotSlices] = useState();
 
-  // slicemasters
-  const [sliceMasters, setSliceMasters] = useState();
+  // staff
+  const [staff, setStaff] = useState();
 
   // use side effect to fetch data from graphql endpoint
   useEffect(function () {
@@ -33,10 +33,10 @@ export default function useLatestData() {
         query {
                 StoreSettings(id: "downtown") {
                     name
-                    slicemaster {
+                    staffmember {
                         ${deets}
                     }
-                    hotSlices {
+                    hotItems {
                         ${deets}
                     }
                 }
@@ -44,15 +44,14 @@ export default function useLatestData() {
       }),
     }).then((res) =>
       res.json().then((resp) => {
-        console.log(resp.data);
-        setHotSlices(resp.data.StoreSettings.hotSlices);
-        setSliceMasters(resp.data.StoreSettings.slicemaster);
+        setHotSlices(resp.data.StoreSettings.hotItems);
+        setStaff(resp.data.StoreSettings.staffmember);
       })
     );
   }, []);
 
   return {
     hotslices,
-    sliceMasters,
+    staff,
   };
 }
