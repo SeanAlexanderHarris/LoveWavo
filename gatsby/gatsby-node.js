@@ -41,7 +41,7 @@ async function turnItemTagsIntoPages({ graphql, actions }) {
   console.log('Creating item tags page...');
 
   // 1. Get a template for this page
-  const storeItemPageTemplate = path.resolve('./src/pages/pizzas.js');
+  const storeItemPageTemplate = path.resolve('./src/pages/store.js');
 
   // 2. Query all toppings
   const { data } = await graphql(`
@@ -58,7 +58,7 @@ async function turnItemTagsIntoPages({ graphql, actions }) {
   // 4. Pass item tag data to store.js
   data.itemTags.nodes.forEach((itemTag) => {
     actions.createPage({
-      path: `itemtags/${itemTag.name}`,
+      path: `itemtags/${itemTag.name.replace(/\s/g, '')}`,
       component: storeItemPageTemplate,
       context: {
         itemTag: itemTag.name,
@@ -184,8 +184,6 @@ async function turnStaffMembersIntoPages({ graphql, actions }) {
       }
     }
   `);
-
-  console.log('DATA IYA', data.staffMembers.nodes);
 
   // 2. Figure out how many pages there are based on how many sliceMasters there are & how many we want per page
   // fix this

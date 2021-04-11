@@ -79,7 +79,10 @@ export default function ToppingsFilter({ activeItemTag }) {
   return (
     <ItemTagsStyles>
       {itemTagsByStoreItemCounts.map((itemTagCount) => (
-        <Link to={`/itemtag/${itemTagCount.name}`} key={itemTagCount.id}>
+        <Link
+          to={`/itemtags/${itemTagCount.name.replace(/\s/g, '')}`}
+          key={itemTagCount.id}
+        >
           <span className="name">{itemTagCount.name}</span>
           <span className="count">{itemTagCount.count}</span>
         </Link>

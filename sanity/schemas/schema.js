@@ -5,7 +5,7 @@ import schemaTypes from 'all:part:@sanity/base/schema-type';
 // Then we give our schema to the builder and provide the result to Sanity
 
 // Core Store
-import pizza from './item';
+import item from './item';
 import itemTag from './itemTag';
 import person from './person';
 import storeSettings from './storeSettings';
@@ -25,5 +25,5 @@ export default createSchema({
   name: 'default',
   // Then proceed to concatenate our document type
   // to the ones provided by any plugins that are installed
-  types: schemaTypes.concat([pizza, itemTag, person, storeSettings, post, postAuthor, project, projectMember, blockContent, blockText, category, mainImage]),
+  types: schemaTypes.concat([item, itemTag, person, storeSettings, post, postAuthor, project, projectMember, blockContent, blockText, category, mainImage]),
 });
